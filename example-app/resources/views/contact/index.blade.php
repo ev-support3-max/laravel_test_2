@@ -1,4 +1,4 @@
-<x-app title="お問い合わせ">
+<x-layouts.app title="お問い合わせ">
 
     <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md mt-10 mb-10">
         <div class="text-center mb-8">
