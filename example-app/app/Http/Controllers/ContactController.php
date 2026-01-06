@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreInquiryRequest;
 
 class ContactController extends Controller
 {
@@ -13,7 +13,7 @@ class ContactController extends Controller
         return view('contact.index');
     }
 
-    public function store(Request $request)
+    public function store(StoreInquiryRequest $request)
     {
         Inquiry::create($request->validated());
 
