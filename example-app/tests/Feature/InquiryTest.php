@@ -64,23 +64,28 @@ class InquiryTest extends TestCase
         $response->assertRedirect('/admin/login');
     }
 
-    // public function test_admin_can_access_inquiries()
-    // {
-    //     $user = User::factory()->create();
+    public function test_admin_can_access_inquiries()
+    {
+        $user = User::factory()->create();
 
-    //     $response = $this->actingAs($user)->get('/admin/inquiries');
-    //     $response->assertStatus(200);
-    // }
+        $response = $this->actingAs($user instanceof User ? $user : new User())->get('/admin/inquiries');
+        $response->assertStatus(200);
+    }
 
-    // public function test_api_create_inquiry()
-    // {
-    //     $response = $this->postJson('/api/inquiries', [
-    //         'first_name' => 'Yamada',
-    //         'last_name' => 'Taro',
-    //         'corp_name' => 'Example Corp',
-    //         'email' => 'yamada@example.com',
-    //     ]);
-    //     $response->assertStatus(201)
-    //              ->assertJson(['message' => 'Inquiry created API successfully.']);
-    // }
+    public function test_api_create_inquiry()
+    {
+        $response = $this->postJson('/api/inquiries', [
+            'first_name' => 'Yamada',
+            'last_name' => 'Taro',
+            'corp_name' => 'Example Corp',
+            'email' => 'yamada@example.com',
+            'content' => 'This is a test inquiry.',
+        ]);
+
+        $response->assertStatus(201);
+        
+        $this->assertDatabaseHas('inquiries', [
+            'email' => 'yamada@example.com',
+        ]);
+    }
 }
