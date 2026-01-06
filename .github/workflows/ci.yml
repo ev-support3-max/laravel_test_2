@@ -22,6 +22,8 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+          php artisan migrate
+          php artisan test
 
       - name: Run tests
         working-directory: example-app
