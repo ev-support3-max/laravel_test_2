@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,9 +13,16 @@ jobs:
         with:
           php-version: '8.3'
 
-      - run: cp .env.example .env
-      - run: composer install -n --prefer-dist
-      - run: php artisan key:generate
+      - name: Install dependencies
+        working-directory: example-app
+        run: composer install --no-interaction --prefer-dist
 
-      - run: php artisan migrate:fresh --seed
-      - run: php artisan test
+      - name: Prepare Laravel
+        working-directory: example-app
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run tests
+        working-directory: example-app
+        run: php artisan test
