@@ -11,7 +11,7 @@ class InquiryTest extends TestCase
     // 送信確認テスト
     public function test_inquiry_can_be_created(): void
     {
-        $response = $this->get('/contact', [
+        $response = $this->post(route('contact.store'), [
             'first_name' => 'Yamada',
             'last_name' => 'Taro',
             'corp_name' => 'Example Corp',
