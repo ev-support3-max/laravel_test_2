@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -13,10 +13,13 @@ class ContactController extends Controller
         return Contact::latest()->get();
     }
     
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
+        $contact = Contact::create($request->validated());
+        
         return response()->json([
             'message' => 'お問い合わせを受け取りました',
-        ]);
+            'data' => $contact, // データも返すと親切です
+        ], 201);
     }
 }
