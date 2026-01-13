@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Inquiries;
+namespace App\Filament\Admin\Resources\Contacts;
 
-use App\Filament\Admin\Resources\Inquiries\Pages;
-use App\Models\Inquiry;
+use App\Filament\Admin\Resources\Contacts\Pages;
+use App\Models\Contact;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,10 +22,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Support\Icons\Heroicon;
 
-
-class InquiryResource extends Resource
+class ContactResource extends Resource
 {
-    protected static ?string $model = Inquiry::class;
+    protected static ?string $model = Contact::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
@@ -114,7 +113,7 @@ class InquiryResource extends Resource
                     Action::make('view')
                         ->label('詳細')
                         ->icon(Heroicon::OutlinedEye)
-                        ->url(fn (Inquiry $record) =>
+                        ->url(fn (Contact $record) =>
                             static::getUrl('edit', ['record' => $record])
                     ),
                 ])
@@ -135,9 +134,9 @@ class InquiryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInquiries::route('/'),
-            'create' => Pages\CreateInquiry::route('/create'),
-            'edit' => Pages\EditInquiry::route('/{record}/edit'),
+            'index' => Pages\ListContacts::route('/'),
+            'create' => Pages\CreateContact::route('/create'),
+            'edit' => Pages\EditContact::route('/{record}/edit'),
         ];
     }
 }

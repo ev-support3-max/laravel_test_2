@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Inquiry;
+use App\Models\Contact;
 use Illuminate\Database\Seeder;
 
-class InquirySeeder extends Seeder
+class ContactSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Inquiry::factory()
+        Contact::factory()
             ->count(50)
             ->create();
     }

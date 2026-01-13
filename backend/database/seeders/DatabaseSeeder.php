@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // Seeder　呼び出し
         $this->call([
             AdminUserSeeder::class,
-            InquirySeeder::class,
+            ContactSeeder::class,
         ]);
     }
 }

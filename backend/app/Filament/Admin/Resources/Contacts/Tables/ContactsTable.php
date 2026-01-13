@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Inquiries\Tables;
+namespace App\Filament\Admin\Resources\Contacts\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 
-class InquiriesTable
+class ContactsTable
 {
     public static function configure(Table $table): Table
     {

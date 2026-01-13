@@ -5,15 +5,15 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Inquiry;
+use App\Models\Contact;
 use App\Models\User;
 
-class InquiryTest extends TestCase
+class ContactTest extends TestCase
 {
     use RefreshDatabase;
     
     // 送信確認テスト
-    public function test_inquiry_can_be_created(): void
+    public function test_Contact_can_be_created(): void
     {
         $this->withoutExceptionHandling();
         {
@@ -22,18 +22,18 @@ class InquiryTest extends TestCase
                 'last_name' => 'Taro',
                 'corp_name' => 'Example Corp',
                 'email' => 'yamada@example.com',
-                'content' => 'This is a test inquiry.',
+                'content' => 'This is a test contact.',
             ]);
 
             $response->assertRedirect(route('contact.index'));
 
-            $this->assertDatabaseHas('inquiries',[
+            $this->assertDatabaseHas('contacts',[
                 'email' => 'yamada@example.com',
             ]);
         }
     }
 
-    public function test_inquiry_validation_errors()
+    public function test_Contact_validation_errors()
     {
         $response = $this->post(route('contact.store'), [
             'first_name' => '山田',
@@ -43,16 +43,16 @@ class InquiryTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors(['email']);
-        $this->assertDatabaseCount('inquiries', 0);
+        $this->assertDatabaseCount('contact', 0);
     }
 
-    public function test_inquiry_fails_when_name_is_long()
+    public function test_Contact_fails_when_name_is_long()
     {
         $response = $this->post(route('contact.store'),[
             'first_name' => str_repeat('a', 300),
             'last_name' => str_repeat('b', 300),
             'email' => 'test@example.com',
-            'content' => 'This is a test inquiry.',
+            'content' => 'This is a test contact.',
         ]);
 
         $response->assertSessionHasErrors(['first_name', 'last_name']);
@@ -60,31 +60,31 @@ class InquiryTest extends TestCase
 
     public function test_gest_connot_access_admin()
     {
-        $response = $this->get('/admin/inquiries');
+        $response = $this->get('/admin/contact');
         $response->assertRedirect('/admin/login');
     }
 
-    public function test_admin_can_access_inquiries()
+    public function test_admin_can_access_contacts()
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user instanceof User ? $user : new User())->get('/admin/inquiries');
+        $response = $this->actingAs($user instanceof User ? $user : new User())->get('/admin/contact');
         $response->assertStatus(200);
     }
 
-    public function test_api_create_inquiry()
+    public function test_api_create_contact()
     {
-        $response = $this->postJson('/api/inquiries', [
+        $response = $this->postJson('/api/contact', [
             'first_name' => 'Yamada',
             'last_name' => 'Taro',
             'corp_name' => 'Example Corp',
             'email' => 'yamada@example.com',
-            'content' => 'This is a test inquiry.',
+            'content' => 'This is a test contact.',
         ]);
 
         $response->assertStatus(201);
         
-        $this->assertDatabaseHas('inquiries', [
+        $this->assertDatabaseHas('contact', [
             'email' => 'yamada@example.com',
         ]);
     }

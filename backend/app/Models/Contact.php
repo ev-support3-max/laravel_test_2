@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Inquiry extends Model
+class Contact extends Model
 {
     use HasFactory;
 
@@ -17,3 +17,4 @@ class Inquiry extends Model
         'content',
     ];
 }
+

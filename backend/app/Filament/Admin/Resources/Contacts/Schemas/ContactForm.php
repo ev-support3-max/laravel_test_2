@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Inquiries\Schemas;
+namespace App\Filament\Admin\Resources\Contacts\Schemas;
 
 use Filament\Schemas\Schema;
 
-class InquiryForm
+class ContactForm
 {
     public static function configure(Schema $schema): Schema
     {
