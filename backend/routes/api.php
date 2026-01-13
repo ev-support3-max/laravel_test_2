@@ -13,3 +13,11 @@ Route::get('/health', function() {
 });
 
 Route::post('/contact', [ContactController::class, 'store']);
+
+Route::get('/user-test', function () {
+    return response()->json([
+        'id' => 1,
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+    ]);
+});
