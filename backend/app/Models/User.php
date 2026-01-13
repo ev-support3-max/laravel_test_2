@@ -8,6 +8,7 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -52,5 +53,11 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel($panel): bool
     {
         return true;
+    }
+
+    // UserとUserProfileDetailの接続
+    public function userProfileDetail(): HasOne
+    {
+        return $this->hasOne(UserProfileDetail::class);
     }
 }
