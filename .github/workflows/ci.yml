@@ -14,11 +14,11 @@ jobs:
           php-version: '8.3'
 
       - name: Install dependencies
-        working-directory: example-app
+        working-directory: backend
         run: composer install --no-interaction --prefer-dist
 
       - name: Prepare Laravel
-        working-directory: example-app
+        working-directory: backend
         run: |
           cp .env.example .env
           php artisan key:generate
@@ -26,5 +26,5 @@ jobs:
           php artisan test
 
       - name: Run tests
-        working-directory: example-app
+        working-directory: backend
         run: php artisan test
