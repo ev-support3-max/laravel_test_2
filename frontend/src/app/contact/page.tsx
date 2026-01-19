@@ -1,49 +1,28 @@
-type Contact = {
-    id: number
-    first_name: string
-    last_name: string
-    corp_name?: string
-    email: string
-    content: string
-    created_at: string
-}
+'use client'
 
-async function getContact(): Promise<Contact[]> {
+import { useEffect, useState } from 'react'
 
-    const res = await fetch(
-        'https://studious-guide-wxggq9gvprphvjjv-80.app.github.dev/api/contacts',
-        {
-            cache: 'no-store',
-            headers: {
-                Accept: 'application/json',
-            }
-        }
-    )
+export default function ContactPage() {
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
 
-    const text = await res.text()
-    console.log('FETCH RESULT:', text)
-    
-    throw new Error('stop')
-}
+  useEffect(() => {
+    fetch('https://studious-guide-wxggq9gvprphvjjv-80.app.github.dev/api/test-contact')
+      .then((res) => res.json())
+      .then((data) => {
+        setMessage(data.message)
+      })
+      .catch(() => {
+        setError('API connection failed')
+      })
+  }, [])
 
-export default async function ContactPage() {
-    const contacts = await getContact()
+  if (error) return <p>{error}</p>
 
-    return (
-        <main style={{ padding: '24px'}}>
-            <h1>Contact一覧</h1>
-
-            <ul>
-                {contacts.map((contact) => (
-                    <li key={contact.id} style={{marginBottom: '16px'}}>
-                        <div>
-                            <strong>
-                                {contact.last_name} {contact.first_name}
-                            </strong>
-                        </div>
-                    </li>    
-                ))}
-            </ul>
-        </main>
-    )
+  return (
+    <main>
+      <h1>Contact</h1>
+      <p>{message}</p>
+    </main>
+  )
 }
