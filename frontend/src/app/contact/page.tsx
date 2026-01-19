@@ -7,22 +7,37 @@ export default function ContactPage() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch('https://studious-guide-wxggq9gvprphvjjv-80.app.github.dev/api/test-contact')
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message)
-      })
-      .catch(() => {
-        setError('API connection failed')
-      })
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contact`
+        )
+
+        if (!res.ok) {
+          throw new Error(`HTTP error: ${res.status}`)
+        }
+
+        const data = await res.json()
+        // data の構造に応じて調整
+        setMessage(JSON.stringify(data))
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError('Unknown error')
+        }
+      }
+    }
+
+    fetchData()
   }, [])
 
-  if (error) return <p>{error}</p>
+  if (error) return <p>❌ {error}</p>
 
   return (
     <main>
       <h1>Contact</h1>
-      <p>{message}</p>
+      <pre>{message}</pre>
     </main>
   )
 }

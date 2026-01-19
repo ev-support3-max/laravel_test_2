@@ -12,13 +12,13 @@ if (!Route::has('login')) {
     require __DIR__.'/auth.php';
 }
 
-Route::get('/contact', [ContactController::class, 'index']);
+// Route::get('/contact', [ContactController::class, 'index']);
 
 
 
 # テスト
-Route::get('/test-contact', function () {
+Route::get('/contact', function () {
     return response()->json([
-        'message' => 'Laravel API connected successfully',
+        'message' => 'Laravel API is working!',
     ]);
 });
