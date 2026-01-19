@@ -12,7 +12,7 @@ class ContactController extends Controller
     {
         $contacts = Contact::orderBy('created_at', 'desc')->get();
 
-        return response()->json($contacts);
+        return response()->json($contacts, 200);
     }
 
     public function store(ContactRequest $request)

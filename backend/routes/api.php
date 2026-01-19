@@ -13,3 +13,12 @@ if (!Route::has('login')) {
 }
 
 Route::get('/contact', [ContactController::class, 'index']);
+
+
+
+# テスト
+Route::get('/test-contact', function () {
+    return response()->json([
+        'message' => 'Laravel API connected successfully',
+    ]);
+});
