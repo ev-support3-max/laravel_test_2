@@ -10,16 +10,18 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return Contact::latest()->get();
+        $contacts = Contact::orderBy('created_at', 'desc')->get();
+
+        return response()->json($contacts);
     }
-    
+
     public function store(ContactRequest $request)
     {
-        $contact = Contact::create($request->validated());
-        
-        return response()->json([
-            'message' => 'お問い合わせを受け取りました',
-            'data' => $contact, // データも返すと親切です
-        ], 201);
+        // $contact = Contact::create($request->validated());
+
+        // return response()->json([
+        //     'message' => 'お問い合わせを受け取りました',
+        //     'data' => $contact, // データも返すと親切です
+        // ], 201);
     }
 }
