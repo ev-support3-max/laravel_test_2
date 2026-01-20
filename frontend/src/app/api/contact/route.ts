@@ -14,7 +14,7 @@ export async function GET() {
   const contentType = res.headers.get('content-type') || '';
   const body = await res.text();
 
-  // LaravelがJSONを返しているときだけJSONとして扱う
+  // ララベルがJSONを返しているときだけJSONとして扱う
   if (contentType.includes('application/json')) {
     return NextResponse.json(JSON.parse(body));
   }
