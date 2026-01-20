@@ -17,11 +17,13 @@ class ContactController extends Controller
 
     public function store(ContactRequest $request)
     {
-        // $contact = Contact::create($request->validated());
+        // 1. データをDBに保存
+        $contact = Contact::create($request->validated());
 
-        // return response()->json([
-        //     'message' => 'お問い合わせを受け取りました',
-        //     'data' => $contact, // データも返すと親切です
-        // ], 201);
+        // 2. JSONを返す
+        return response()->json([
+            'message' => 'お問い合わせを受け付けました',
+            'data' => $contact
+        ], 201);
     }
 }
