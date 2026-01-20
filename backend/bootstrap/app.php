@@ -23,6 +23,14 @@ return Application::configure(basePath: dirname(__DIR__))
         //
         $middleware->trustProxies(at: '*');
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
-    })->create();
+    ->withExceptions(function (Exceptions $exceptions) {
+        // 👇 これを追加
+        $exceptions->render(function (Throwable $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        });
+    })
+    ->create();

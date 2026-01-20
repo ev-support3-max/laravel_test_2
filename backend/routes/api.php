@@ -14,11 +14,10 @@ if (!Route::has('login')) {
 
 // Route::get('/contact', [ContactController::class, 'index']);
 
-
-
-# テスト
-Route::get('/contact', function () {
-    return response()->json([
+// routes/api.php
+Route::middleware(['auth:sanctum'])->get('/contact', function (Request $request) {
+    return $request->json([
         'message' => 'Laravel API is working!',
     ]);
 });
+

@@ -1,30 +1,27 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   const res = await fetch(
-    'https://studious-guide-wxggq9gvprphvjjv-80.app.github.dev/api/contact',
+    `${process.env.API_BASE_URL}/api/contact`,
     {
       headers: {
         Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      cache: 'no-store',
     }
-  )
+  );
 
-  // ★ ここ重要：Laravelが何を返しているか確認できるようにする
-  const text = await res.text()
+  const contentType = res.headers.get('content-type') || '';
+  const body = await res.text();
 
-  if (!res.ok) {
-    return NextResponse.json(
-      {
-        error: 'Laravel API Error',
-        status: res.status,
-        body: text,
-      },
-      { status: 500 }
-    )
+  // LaravelがJSONを返しているときだけJSONとして扱う
+  if (contentType.includes('application/json')) {
+    return NextResponse.json(JSON.parse(body));
   }
 
-  // JSONとして安全に返す
-  return NextResponse.json(JSON.parse(text))
+  // それ以外（HTMLなど）はエラーとして返す
+  return new NextResponse(
+    `Laravel returned non-JSON response:\n\n${body}`,
+    { status: 500 }
+  );
 }
