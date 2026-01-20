@@ -1,19 +1,63 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function ContactPage() {
-  const [status, setStatus] = useState('');
+  // 1. 入力データを定義
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    corp_name: '',
+    email: '',
+    content: '',
+  });
+
+  // そのほかのメッセージの定義
+  const [status, setStatus] = useState(''); // 送信成功 or 失敗メッセージ
+  const [validationErrors, setValidationErrors] = useState<any>({});
+
+
+  // 2. 入力するたびにデータを更新
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 3. 送信ボタンをおしたときの関数
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // 画面のリロードを防ぐ
+    setStatus('送信中...');
+    setValidationErrors({}); // エラーを一旦リセット
+  }
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      // 成功時(201)
+      setStatus('送信完了！お問い合わせありがとうございます');
+      setFormData({ first_name: '', last_name: '', corp_name: '', email: '', content: ''})
+    }
+  }
+
 
   const sendTest = async () => {
     setStatus('送信中。。。');
 
     // テスト用の固定データ
     const testData = {
-      first_name: 'Test',
-      last_name: 'Taro',
-      corp_name: 'Test Corp',
-      email: `test-${Date.now()}@example.com`,
-      content: 'Next.jsからの送信テスト',
+      first_name: '',
+      last_name: '',
+      corp_name: '',
+      email: ``,
+      content: '',
     };
 
     try {
