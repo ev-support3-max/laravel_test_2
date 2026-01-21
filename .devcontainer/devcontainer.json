@@ -1,0 +1,19 @@
+{
+    "name": "Laravel & Next.js",
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    // ▼ 自動でポートを開ける設定
+    "forwardPorts": [80, 3000],
+    "portsAttributes": {
+        "80": {
+            "label": "Laravel",
+            "visibility": "public"
+        },
+        "3000": {
+            "label": "Next.js",
+            "visibility": "public"
+        }
+    }
+}
